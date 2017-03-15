@@ -18,12 +18,15 @@
         android:background="#88000000"
         android:visibility="gone"/>
 
-    <com.lzy.imagepicker.view.SuperCheckBox
+    <com.lzy.imagepicker.view.ImageCheckBox
+        android:src="@drawable/selector_item_checked"
         android:id="@+id/cb_check"
-        style="@style/SuperCheckboxTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"/>
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        />
 </FrameLayout>

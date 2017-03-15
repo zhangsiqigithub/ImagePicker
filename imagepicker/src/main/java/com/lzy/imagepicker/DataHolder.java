@@ -1,5 +1,7 @@
 package com.lzy.imagepicker;
 
+import android.support.annotation.Nullable;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +30,11 @@ public class DataHolder {
         data.put(id, new WeakReference<Object>(object));
     }
 
+    @Nullable
     public Object retrieve(String id) {
         WeakReference<Object> objectWeakReference = data.get(id);
+        if (objectWeakReference == null)
+            return null;
         return objectWeakReference.get();
     }
 }

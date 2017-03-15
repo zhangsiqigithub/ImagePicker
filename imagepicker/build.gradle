@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 24
@@ -7,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -22,6 +23,15 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file://" + file("maven"))
+        pom.groupId = "com.worktile.imagepicker"
+        pom.artifactId = 'imagepicker'
+        pom.version = "1.0.1"
+    }
 }
 
 //apply from: '../bintray.gradle'

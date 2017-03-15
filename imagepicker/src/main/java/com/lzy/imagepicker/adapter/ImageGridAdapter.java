@@ -2,7 +2,12 @@ package com.lzy.imagepicker.adapter;
 
 import android.Manifest;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.PorterDuff;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +22,7 @@ import com.lzy.imagepicker.Utils;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageBaseActivity;
 import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.lzy.imagepicker.view.SuperCheckBox;
+import com.lzy.imagepicker.view.ImageCheckBox;
 
 import java.util.ArrayList;
 
@@ -123,7 +128,8 @@ public class ImageGridAdapter extends BaseAdapter {
             holder.ivThumb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) listener.onImageItemClick(holder.rootView, imageItem, position);
+                    if (listener != null)
+                        listener.onImageItemClick(holder.rootView, imageItem, position);
                 }
             });
             holder.cbCheck.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +137,7 @@ public class ImageGridAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     int selectLimit = imagePicker.getSelectLimit();
                     if (holder.cbCheck.isChecked() && mSelectedImages.size() >= selectLimit) {
-                        Toast.makeText(mActivity.getApplicationContext(), mActivity.getString(R.string.select_limit, selectLimit), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity.getApplicationContext(), mActivity.getString(R.string.select_limit, String.valueOf(selectLimit)), Toast.LENGTH_SHORT).show();
                         holder.cbCheck.setChecked(false);
                         holder.mask.setVisibility(View.GONE);
                     } else {
@@ -154,22 +160,23 @@ public class ImageGridAdapter extends BaseAdapter {
             } else {
                 holder.cbCheck.setVisibility(View.GONE);
             }
+            holder.ivThumb.setColorFilter(ContextCompat.getColor(mActivity, R.color.color_filter_grey), PorterDuff.Mode.MULTIPLY);
             imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, holder.ivThumb, mImageSize, mImageSize); //显示图片
         }
         return convertView;
     }
 
     private class ViewHolder {
-        public View rootView;
-        public ImageView ivThumb;
-        public View mask;
-        public SuperCheckBox cbCheck;
+        View rootView;
+        ImageView ivThumb;
+        View mask;
+        ImageCheckBox cbCheck;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             rootView = view;
             ivThumb = (ImageView) view.findViewById(R.id.iv_thumb);
             mask = view.findViewById(R.id.mask);
-            cbCheck = (SuperCheckBox) view.findViewById(R.id.cb_check);
+            cbCheck = (ImageCheckBox) view.findViewById(R.id.cb_check);
         }
     }
 
