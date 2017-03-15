@@ -6,5 +6,5 @@ package com.lzy.imagepicker;
 
 public class Constants {
 
-    public static final String PROVIDER_AUTHORITY = "com.lzy.imagepicker.provider";
+    public static final String PROVIDER_AUTHORITY = "com.lesschat.fileprovider";
 }

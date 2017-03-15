@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 24
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
     }
     buildTypes {
         release {
@@ -30,7 +30,7 @@ uploadArchives {
         repository(url: "file://" + file("maven"))
         pom.groupId = "com.worktile.imagepicker"
         pom.artifactId = 'imagepicker'
-        pom.version = "1.0.1"
+        pom.version = "1.0.2"
     }
 }
 
