@@ -14,12 +14,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.lzy.imagepicker.DataHolder;
 import com.lzy.imagepicker.ImageDataSource;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.adapter.ImageFolderAdapter;
 import com.lzy.imagepicker.adapter.ImageGridAdapter;
-import com.lzy.imagepicker.DataHolder;
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.FolderPopUpWindow;
@@ -147,6 +147,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
             intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getSelectedImages());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
+            intent.putExtra(ImagePreviewBaseActivity.TYPE_KEY, ImagePreviewBaseActivity.TYPE_SELECTED);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);
         } else if (id == R.id.btn_back) {
             //点击返回按钮
@@ -194,6 +195,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
             DataHolder.getInstance().save(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS, imagePicker.getCurrentImageFolderItems());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
+            intent.putExtra(ImagePreviewBaseActivity.TYPE_KEY, ImagePreviewBaseActivity.TYPE_ALL);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //如果是多选，点击图片进入预览界面
         } else {
             imagePicker.clearSelectedImages();

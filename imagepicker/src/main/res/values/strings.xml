@@ -9,4 +9,5 @@
     <string name="photo_crop">图片裁剪</string>
     <string name="origin">原图</string>
     <string name="origin_size">原图(%1$s)</string>
+    <string name="cache_null">数据错误，请重新选择</string>
 </resources>

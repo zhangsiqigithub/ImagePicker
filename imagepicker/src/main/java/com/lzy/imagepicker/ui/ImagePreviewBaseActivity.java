@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.lzy.imagepicker.DataHolder;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.Utils;
@@ -14,6 +16,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.ViewPagerFixed;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ================================================
@@ -26,9 +29,15 @@ import java.util.ArrayList;
  */
 public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
 
+    public static final String TYPE_KEY = "type_key";
+
+    public static final int TYPE_ALL = 10;
+    public static final int TYPE_SELECTED = 20;
+
     protected ImagePicker imagePicker;
     protected ArrayList<ImageItem> mImageItems = new ArrayList<>();      //跳转进ImagePreviewFragment的图片文件夹
     protected int mCurrentPosition = 0;              //跳转进ImagePreviewFragment时的序号，第几个图片
+    protected int mType = TYPE_ALL;
     protected TextView mTitleCount;                  //显示当前图片的位置  例如  5/31
     protected ArrayList<ImageItem> selectedImages;   //所有已经选中的图片
     protected View content;
@@ -42,11 +51,17 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
         setContentView(R.layout.activity_image_preview);
 
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
-//        List<ImageItem> cacheItems = ((ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS));
-//        if (cacheItems != null)
+        mType = getIntent().getIntExtra(TYPE_KEY, TYPE_ALL);
+        List<ImageItem> cacheItems = ((ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS));
         imagePicker = ImagePicker.getInstance();
-        mImageItems.addAll(imagePicker.getSelectedImages());
         selectedImages = imagePicker.getSelectedImages();
+        if (mType == TYPE_ALL) {
+            if (cacheItems != null)
+                mImageItems.addAll(cacheItems);
+            else
+                Toast.makeText(this, R.string.cache_null, Toast.LENGTH_SHORT).show();
+        } else
+            mImageItems.addAll(selectedImages);
 
         //初始化控件
         content = findViewById(R.id.content);
