@@ -9,7 +9,7 @@ android {
         minSdkVersion 11
         targetSdkVersion 24
         versionCode 6
-        versionName "1.0.5"
+        versionName "1.0.6"
     }
     buildTypes {
         release {
@@ -30,7 +30,7 @@ uploadArchives {
         repository(url: "file://" + file("maven"))
         pom.groupId = "com.worktile.imagepicker"
         pom.artifactId = 'imagepicker'
-        pom.version = "1.0.5"
+        pom.version = "1.0.6"
     }
 }
 
