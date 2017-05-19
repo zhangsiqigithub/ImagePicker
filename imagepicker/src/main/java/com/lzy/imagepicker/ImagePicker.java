@@ -302,4 +302,8 @@ public class ImagePicker {
             l.onImageSelected(position, item, isAdd);
         }
     }
+
+    public static void setAuthor(String author) {
+        Constants.PROVIDER_AUTHORITY = author;
+    }
 }
