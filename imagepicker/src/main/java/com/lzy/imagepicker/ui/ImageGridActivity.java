@@ -24,6 +24,8 @@ import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.FolderPopUpWindow;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -238,6 +240,19 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 //点击 X , 没有选择照片
                 if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
                     //什么都不做
+                    File file = imagePicker.getTakeImageFile();
+                    if (file != null) {
+                        ImageItem imageItem = new ImageItem();
+                        imageItem.path = file.getAbsolutePath();
+                        imageItem.name = file.getName();
+                        imageItem.size = file.length();
+                        imageItem.addTime = file.lastModified();
+                        ArrayList<ImageItem> imageItems = new ArrayList<>();
+                        imageItems.add(imageItem);
+                        data.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imageItems);
+                        setResult(ImagePicker.RESULT_CODE_ITEMS, data);
+                        finish();
+                    }
                 } else {
                     //说明是从裁剪页面过来的数据，直接返回就可以
                     setResult(ImagePicker.RESULT_CODE_ITEMS, data);
