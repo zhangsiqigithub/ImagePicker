@@ -11,9 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.ImagePickerResultEvent;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.CropImageView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -116,6 +119,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         Intent intent = new Intent();
         intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+        EventBus.getDefault().post(new ImagePickerResultEvent(mImageItems));
         finish();
     }
 

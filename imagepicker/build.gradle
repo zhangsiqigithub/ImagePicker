@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 24
@@ -9,7 +9,7 @@ android {
         minSdkVersion 11
         targetSdkVersion 24
         versionCode 6
-        versionName "1.0.8"
+        versionName "1.0.9"
     }
     buildTypes {
         release {
@@ -23,15 +23,31 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
+
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "file://" + file("maven"))
-        pom.groupId = "com.worktile.imagepicker"
-        pom.artifactId = 'imagepicker'
-        pom.version = "1.0.8"
+publishing {
+    publications {
+        imagePicker(MavenPublication) {
+            groupId 'com.worktile.imagepicker'
+            artifactId 'imagepicker'
+            version '1.0.9'
+            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/imagepicker-release.aar")
+            generatePom(pom)
+        }
+    }
+
+    repositories {
+        maven {
+            url "s3://worktile-maven"
+            credentials(AwsCredentials) {
+                accessKey AWS_ACCESS_KEY
+                secretKey AWS_SECRET_KEY
+            }
+        }
     }
 }
 
-//apply from: '../bintray.gradle'
+apply from: '../publish.gradle'

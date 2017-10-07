@@ -12,9 +12,12 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.ImagePickerResultEvent;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.SuperCheckBox;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * ================================================
@@ -118,6 +121,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
             Intent intent = new Intent();
             intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
             setResult(ImagePicker.RESULT_CODE_ITEMS, intent);
+            EventBus.getDefault().post(new ImagePickerResultEvent(imagePicker.getSelectedImages()));
             finish();
         } else if (id == R.id.btn_back) {
             Intent intent = new Intent();

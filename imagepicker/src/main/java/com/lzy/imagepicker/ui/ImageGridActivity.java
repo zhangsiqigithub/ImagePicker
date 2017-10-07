@@ -17,12 +17,15 @@ import android.widget.GridView;
 import com.lzy.imagepicker.DataHolder;
 import com.lzy.imagepicker.ImageDataSource;
 import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.ImagePickerResultEvent;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.adapter.ImageFolderAdapter;
 import com.lzy.imagepicker.adapter.ImageGridAdapter;
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.FolderPopUpWindow;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -126,6 +129,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             Intent intent = new Intent();
             intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
             setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //多选不允许裁剪裁剪，返回数据
+            EventBus.getDefault().post(new ImagePickerResultEvent(imagePicker.getSelectedImages()));
             finish();
         } else if (id == R.id.btn_dir) {
             if (mImageFolders == null) {
@@ -209,6 +213,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
                 setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+                EventBus.getDefault().post(new ImagePickerResultEvent(imagePicker.getSelectedImages()));
                 finish();
             }
         }
@@ -275,6 +280,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                     Intent intent = new Intent();
                     intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
                     setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+                    EventBus.getDefault().post(new ImagePickerResultEvent(imagePicker.getSelectedImages()));
                     finish();
                 }
             }
